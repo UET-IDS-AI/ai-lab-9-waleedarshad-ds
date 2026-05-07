@@ -26,7 +26,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 
 
+# ============================================================
 # Question 1: Confusion Matrix, Metrics, and Threshold Effects
+# ============================================================
 
 def confusion_matrix_counts(y_true, y_pred):
     """
@@ -91,8 +93,9 @@ def threshold_metrics_analysis(y_true, scores, thresholds):
     return analysis_results
 
 
+# ============================================================
 # Question 2: Train Two Classifiers and Evaluate Them
-
+# ============================================================
 
 def train_two_classifiers(X_train, y_train):
     """
@@ -102,6 +105,7 @@ def train_two_classifiers(X_train, y_train):
     log_reg = LogisticRegression(max_iter=1000)
     dt_clf = DecisionTreeClassifier(random_state=0)
 
+    # Fit models
     log_reg.fit(X_train, y_train)
     dt_clf.fit(X_train, y_train)
 
@@ -115,14 +119,19 @@ def evaluate_classifier(model, X_test, y_test, threshold=0.5):
     """
     Evaluate a trained classifier using a specific threshold.
     """
+    # 1. Get probabilities for the positive class (column 1)
     probs = model.predict_proba(X_test)[:, 1]
-
+    
+    # 2. Apply threshold
     y_pred = apply_threshold(probs, threshold)
-
+    
+    # 3. Get counts
     TP, FP, FN, TN = confusion_matrix_counts(y_test, y_pred)
-
+    
+    # 4. Get metrics
     metrics = classification_metrics(y_test, y_pred)
- 
+    
+    # Combine into final dictionary
     results = {
         "TP": TP, "FP": FP, "FN": FN, "TN": TN
     }
@@ -148,3 +157,4 @@ def compare_classifiers(X_train, y_train, X_test, y_test, threshold=0.5):
 
 if __name__ == "__main__":
     print("Implement all required functions.")
+    # You can add test code here to verify your work!
